@@ -5,10 +5,11 @@ import { removeCircularReferences } from "./utility.js";
 export default class AsyncListController {
 
     createList = async (req, res) => {
-        // setTimeout(() => {
-        //     //  preprocess to kill process like vm call etc and etc
-        //     process.kill(process.pid)
-        // }, 2000);
+        setTimeout(() => {
+            //  preprocess to kill process like // etc and etc
+            console.log("KILLED");
+            process.kill(process.pid)
+        }, 5000);
         const data = await this.runScript(code3, {});
         res.json({ ProcessId: 'Worker Process Id' + process.pid, data });
     };
@@ -17,10 +18,10 @@ export default class AsyncListController {
         try {
             const vm = new NodeVM({
                 console: 'redirect',
-                allowAsync: true,
                 sandbox: {
                     axios
                 },
+                timeout: 15000
             });
             const logs = [];
             vm.on('console.log', (...args) => {
@@ -41,10 +42,9 @@ export default class AsyncListController {
     }
 }
 const code1 = `module.exports = async function(variables) { return 111};`;
-const code2 = `module.exports = async function(variables) { return axios.get("http://localhost:3000/")};`;
+const code2 = `module.exports = async function(variables) { return await axios.get("http://localhost:3000/")};`;
 const code3 = `module.exports = async function(variables) {
-     const currentDate = new Date();
-    currentDate.setSeconds(currentDate.getSeconds() + 5);
-while(new Date()<currentDate){}
+     let i=5000000000;
+while(true){}
         return 111};`;
 const code4 = `module.exports = async function(variables) { return 111};`;

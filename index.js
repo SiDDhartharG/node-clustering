@@ -104,7 +104,14 @@ const setupServer = (isClusterRequired) => {
         setUpExpress();
     }
 };
-
+process.on('SIGINT', function () {
+    console.log("IN SIGINT");
+    process.exit()
+})
+process.on('SIGTERM', function () {
+    console.log("IN SIGTERM");
+    process.exit()
+})
 setupServer(true);
 
 export { app };
