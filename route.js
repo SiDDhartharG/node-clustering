@@ -9,7 +9,7 @@ const setRouter = (app) => {
      * GET status
      */
     router.get('/status', (req, res) => res.send({ status: 200 }));
-    router.route('/list').get(asyncListController.createList);
+    router.route('/piscina').get(asyncListController.piscina);
 
     // gc route
     router.route('/int-gc-clean').get((req, res) => {

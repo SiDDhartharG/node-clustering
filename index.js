@@ -95,9 +95,10 @@ const setUpExpress = () => {
  * @constructor
  */
 const setupServer = (isClusterRequired) => {
+    console.log("THIS IS MAIN", cluster.isPrimary);
 
     // if it is a master process then call setting up worker process
-    if (isClusterRequired && cluster.isPrimary) {
+    if (isClusterRequired && cluster.isMaster) {
         setupWorkerProcesses();
     } else {
         // to setup server configurations and share port address for incoming requests
